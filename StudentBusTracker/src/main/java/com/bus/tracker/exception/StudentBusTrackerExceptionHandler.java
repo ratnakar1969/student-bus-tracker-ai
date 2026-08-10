@@ -2,7 +2,6 @@ package com.bus.tracker.exception;
 
 import java.time.LocalDateTime;
 
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +10,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.bus.tracker.dto.ErrorResponse;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @RestControllerAdvice
+
 public class StudentBusTrackerExceptionHandler {
 	
 
