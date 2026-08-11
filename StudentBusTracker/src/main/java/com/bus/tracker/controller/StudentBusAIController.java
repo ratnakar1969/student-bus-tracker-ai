@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bus.tracker.aitool.BusMovementAITool;
+import com.bus.tracker.aitool.StudentAITool;
 
 @RestController
 @RequestMapping("/studentbustracker/ai")
@@ -21,6 +22,9 @@ public class StudentBusAIController {
 	@Autowired
 	BusMovementAITool busMovementTool;
 	
+	@Autowired
+	StudentAITool studentAITool;
+	
 
 
 
@@ -30,7 +34,7 @@ public class StudentBusAIController {
     	 return ollamaChatClient
                  .prompt()
                  .user(question)
-                 .tools(busMovementTool)
+                 .tools(busMovementTool,studentAITool)
                  .call()
                  .content();
     }
