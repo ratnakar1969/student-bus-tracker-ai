@@ -1,6 +1,7 @@
 package com.bus.tracker.controller;
 
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,12 +30,16 @@ public class StudentBusAIController {
 
 
     @GetMapping("/ask")
-    public String ask(@RequestParam String question) {
+    public String ask(@RequestParam String question, @RequestParam String conversationId) {
 
     	 return ollamaChatClient
                  .prompt()
                  .user(question)
                  .tools(busMovementTool,studentAITool)
+                 .advisors(a -> a.param(
+                         ChatMemory.CONVERSATION_ID,
+                         conversationId
+                 ))
                  .call()
                  .content();
     }

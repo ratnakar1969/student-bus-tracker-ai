@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import com.bus.tracker.model.Student;
 import com.bus.tracker.service.StudentService;
 
+
+
 @Component
 public class StudentAITool {
 
@@ -14,9 +16,7 @@ public class StudentAITool {
     private StudentService studentService;
     
     @Tool(description = """
-            Get complete information about a student.
-            The result contains the student's ID, name, and the bus ID assigned to that student.
-            Always use this tool when the user asks about a student or wants to know which bus
+            Get complete information about a student.Always use this tool when the user asks about a student or wants to know which bus
             is assigned to a student.
             """)
     public String getStudent(int studentId) {
