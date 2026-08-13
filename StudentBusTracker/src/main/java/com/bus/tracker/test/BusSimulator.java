@@ -36,11 +36,11 @@ public class BusSimulator {
 
 		Route route42 = new Route(42, Arrays.asList(miyapur, school));
 
-		Bus bus37 = new Bus(37, route37, 30, "ON TIME");
+		Bus bus37 = new Bus(37, route37, 30, "ON TIME",5);
 
-		Bus bus40 = new Bus(40, route40, 25, "ON TIME");
+		Bus bus40 = new Bus(40, route40, 25, "ON TIME",5);
 
-		Bus bus42 = new Bus(42, route42, 28, "DELAYED");
+		Bus bus42 = new Bus(42, route42, 28, "DELAYED",5);
 
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 

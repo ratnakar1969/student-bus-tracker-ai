@@ -8,6 +8,27 @@ import com.bus.tracker.model.Stop;
 
 @Service
 public class ETAService {
+	
+	public String calculateStatus(Bus bus) {
+
+	    double actualEta =
+	            calculateEtaMinutes(bus);
+
+	    double scheduledEta =
+	            bus.getScheduledEtaMinutes();
+
+	    if (actualEta < 0) {
+	        return "UNKNOWN";
+	    }
+
+	    if (actualEta > scheduledEta + 2) {
+	        return "DELAYED";
+	    }
+
+	    return "ON TIME";
+	}
+	
+	
 
     public double calculateDistanceToNextStop(Bus bus) {
 

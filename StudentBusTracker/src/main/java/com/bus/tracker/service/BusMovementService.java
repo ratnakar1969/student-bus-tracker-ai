@@ -57,7 +57,9 @@ public class BusMovementService {
 
 		status.setEtaMinutes(etaService.calculateEtaMinutes(bus));
 
-		status.setStatus(bus.getStatus());
+		status.setStatus(
+			    etaService.calculateStatus(bus)
+			);
 
 		return status;
 	}
@@ -202,8 +204,8 @@ public class BusMovementService {
 	        );
 
 	        status.setStatus(
-	                bus.getStatus()
-	        );
+	        	    etaService.calculateStatus(bus)
+	        	);
 
 	        result.add(status);
 	    }

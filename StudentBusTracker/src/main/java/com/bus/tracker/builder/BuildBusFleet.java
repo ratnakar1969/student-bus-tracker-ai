@@ -1,5 +1,6 @@
 package com.bus.tracker.builder;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,12 +12,14 @@ import com.bus.tracker.model.Stop;
 
 @Component
 public class BuildBusFleet {
-	private List<Bus> busFleet;
+    private List<Bus> busFleet = new ArrayList<>();
 
-	public BuildBusFleet(List<Bus> busFleet) {
-		this.busFleet = busFleet;
-	}
+
 public List<Bus> createBuses() {
+
+    if (!busFleet.isEmpty()) {
+        return busFleet;
+    }
 
 	        // -------------------------
 	        // Bus 37
@@ -50,7 +53,7 @@ public List<Bus> createBuses() {
 	                        37,
 	                        route37,
 	                        30,
-	                        "ON TIME"
+	                        "ON TIME",5
 	                );
 
 	        bus37.setLatitude(
@@ -88,7 +91,7 @@ public List<Bus> createBuses() {
 	                        40,
 	                        route40,
 	                        25,
-	                        "ON TIME"
+	                        "ON TIME",5
 	                );
 
 	        bus40.setLatitude(
@@ -125,7 +128,7 @@ public List<Bus> createBuses() {
 	                        42,
 	                        route42,
 	                        28,
-	                        "DELAYED"
+	                        "DELAYED",5
 	                );
 
 	        bus42.setLatitude(

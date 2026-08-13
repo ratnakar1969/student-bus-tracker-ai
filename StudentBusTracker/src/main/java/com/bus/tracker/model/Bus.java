@@ -9,8 +9,9 @@ public class Bus {
     private double longitude;
     private double speed;
     private String status;
+    private double scheduledEtaMinutes;
 
-    public Bus(int id, Route route, double speed, String status) {
+    public Bus(int id, Route route, double speed, String status,double scheduledEtaMinutes) {
 
         this.id = id;
         this.route = route;
@@ -22,6 +23,8 @@ public class Bus {
 
         this.longitude =
                 route.getStops().get(0).getLongitude();
+        
+        this.scheduledEtaMinutes = scheduledEtaMinutes;
     }
 
     public Bus() {
@@ -89,6 +92,14 @@ public class Bus {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public double getScheduledEtaMinutes() {
+		return scheduledEtaMinutes;
+	}
+
+	public void setScheduledEtaMinutes(double scheduledEtaMinutes) {
+		this.scheduledEtaMinutes = scheduledEtaMinutes;
 	}
 	
 }
