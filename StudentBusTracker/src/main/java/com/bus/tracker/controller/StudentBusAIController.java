@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bus.tracker.aitool.BusAlertAITool;
 import com.bus.tracker.aitool.BusMovementAITool;
 import com.bus.tracker.aitool.ParentAITool;
 import com.bus.tracker.aitool.StudentAITool;
@@ -32,7 +33,12 @@ public class StudentBusAIController {
 	ParentAITool parentAITool;
 	
 	@Autowired
+	BusAlertAITool busAlertTool;
+	
+	@Autowired
 	ParentContext parentContext;
+	
+
 
 
 
@@ -48,7 +54,7 @@ public class StudentBusAIController {
     	 return ollamaChatClient
                  .prompt()
                  .user(question)
-                 .tools(busMovementTool,studentAITool,parentAITool)
+                 .tools(busMovementTool,studentAITool,parentAITool,busAlertTool)
                  .advisors(a -> a.param(
                          ChatMemory.CONVERSATION_ID,
                          conversationId

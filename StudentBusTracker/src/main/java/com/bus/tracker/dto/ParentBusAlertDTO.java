@@ -1,6 +1,8 @@
 package com.bus.tracker.dto;
 
-public class ParentBusStatusDTO {
+public class ParentBusAlertDTO {
+	
+
     private int studentId;
     private String studentName;
     private int busId;
@@ -8,90 +10,10 @@ public class ParentBusStatusDTO {
     private String nextStop;
     private double etaMinutes;
 
-
-    public ParentBusStatusDTO() {
+    public ParentBusAlertDTO() {
     }
 
-
-
-
-
-	public int getBusId() {
-		return busId;
-	}
-
-
-	public void setBusId(int busId) {
-		this.busId = busId;
-	}
-
-
-	public String getStatus() {
-		return status;
-	}
-
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-
-	public String getNextStop() {
-		return nextStop;
-	}
-
-
-	public void setNextStop(String nextStop) {
-		this.nextStop = nextStop;
-	}
-
-
-	public double getEtaMinutes() {
-		return etaMinutes;
-	}
-
-
-	public void setEtaMinutes(double etaMinutes) {
-		this.etaMinutes = etaMinutes;
-	}
-
-
-
-
-
-	public int getStudentId() {
-		return studentId;
-	}
-
-
-
-
-
-	public void setStudentId(int studentId) {
-		this.studentId = studentId;
-	}
-
-
-
-
-
-	public String getStudentName() {
-		return studentName;
-	}
-
-
-
-
-
-	public void setStudentName(String studentName) {
-		this.studentName = studentName;
-	}
-
-
-
-
-
-	public ParentBusStatusDTO(int studentId, String studentName, int busId, String status, String nextStop,
+	public ParentBusAlertDTO(int studentId, String studentName, int busId, String status, String nextStop,
 			double etaMinutes) {
 		super();
 		this.studentId = studentId;
@@ -102,21 +24,52 @@ public class ParentBusStatusDTO {
 		this.etaMinutes = etaMinutes;
 	}
 
+	public int getStudentId() {
+		return studentId;
+	}
 
+	public void setStudentId(int studentId) {
+		this.studentId = studentId;
+	}
 
+	public String getStudentName() {
+		return studentName;
+	}
 
+	public void setStudentName(String studentName) {
+		this.studentName = studentName;
+	}
 
+	public int getBusId() {
+		return busId;
+	}
 
+	public void setBusId(int busId) {
+		this.busId = busId;
+	}
 
+	public String getStatus() {
+		return status;
+	}
 
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
+	public String getNextStop() {
+		return nextStop;
+	}
 
+	public void setNextStop(String nextStop) {
+		this.nextStop = nextStop;
+	}
 
+	public double getEtaMinutes() {
+		return etaMinutes;
+	}
 
-
-
-
-
-
+	public void setEtaMinutes(double etaMinutes) {
+		this.etaMinutes = etaMinutes;
+	}
 
 }

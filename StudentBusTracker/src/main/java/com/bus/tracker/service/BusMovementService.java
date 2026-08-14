@@ -159,8 +159,8 @@ public class BusMovementService {
 	    return new ParentBusStatusDTO(
 	            bus.getId(),
 	            bus.getStatus(),
-	            nextStop,
-	            eta
+	            busId, nextStop,
+	            nextStop, eta
 	    );
 	}
 	
