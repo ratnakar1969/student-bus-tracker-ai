@@ -1,42 +1,48 @@
 package com.bus.tracker.service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
-import com.bus.tracker.entity.Student;
+import com.bus.tracker.model.Parents;
+import com.bus.tracker.model.Students;
+import com.bus.tracker.repository.StudentRepository;
 
 @Service
 public class StudentService {
-	private final List<Student> students = Arrays.asList(
-            new Student(1, "Rahul", 37),
-            new Student(2, "Priya", 40),
-            new Student(3, "Arjun", 42)
-    );
 
-    public Student getStudent(int studentId) {
+	@Autowired
+	StudentRepository studentRepository;
+	
+	public List<Students> getStudents() {
+		return studentRepository.findAll();
+	}
 
-        for (Student student : students) {
+    public Students getStudent(Long studentId) {
 
-            if (student.getId() == studentId) {
-                return student;
-            }
-        }
-
-        return null;
+          return studentRepository.findById(studentId).orElse(null);
     }
     
-    public Student getStudentByName(String name) {
+    public Students getStudentByName(String name) {
 
-        for (Student student : students) {
-
-            if (student.getName().equalsIgnoreCase(name)) {
-                return student;
-            }
-        }
-
-        return null;
+        return studentRepository.findByName(name);
+    }
+    
+    public List<Students> getStudentByParentId(Long parentId)
+    {
+    	List<Students> students=new ArrayList<Students>();
+    	        Parents parent= studentRepository.findByParentId(parentId);
+				for (Students student : getStudents()) {
+					if (student.getParent().getId() == parent.getId()) {
+						students.add(student);
+					}
+				}
+			return students;
+    	        
     }
 
 }

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.bus.tracker.entity.Student;
+import com.bus.tracker.model.Students;
 import com.bus.tracker.service.StudentService;
 
 
@@ -22,15 +23,15 @@ public class StudentAITool {
             is assigned to a student.
             """)
     public String getStudent(int studentId) {
-    	 Student student = studentService.getStudent(studentId);
+    	 Students student = studentService.getStudent((long) studentId);
 
     	 if (student == null) {
     	        return "Student with ID " + studentId + " was not found.";
     	    }
 
     	    return "Student ID: " + student.getId()
-    	            + ", Student Name: " + student.getName()
-    	            + ", Assigned Bus Number: " + student.getBusId();
+    	            + ", Student Name: " + student.getName();
+    	           
     }
     
     
@@ -42,15 +43,14 @@ public class StudentAITool {
             """)
     public String getStudentByName(String name) {
 
-        Student student = studentService.getStudentByName(name);
+        Students student = studentService.getStudentByName(name);
 
         if (student == null) {
             return "Student named " + name + " was not found.";
         }
 
         return "Student ID: " + student.getId()
-                + ", Student Name: " + student.getName()
-                + ", Assigned Bus Number: " + student.getBusId();
+                + ", Student Name: " + student.getName();
     }
 
 }

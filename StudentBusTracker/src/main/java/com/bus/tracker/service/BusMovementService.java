@@ -1,8 +1,5 @@
 package com.bus.tracker.service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +9,7 @@ import com.bus.tracker.dto.ParentBusStatusDTO;
 import com.bus.tracker.entity.Bus;
 import com.bus.tracker.entity.Route;
 import com.bus.tracker.exception.BusNotFoundException;
+import com.bus.tracker.model.Buses;
 import com.bus.tracker.model.Stop;
 
 @Service
@@ -19,6 +17,8 @@ public class BusMovementService {
 
 	@Autowired
 	BusFleetService busFleetService;
+	
+
 
 	@Autowired
 	ETAService etaService;
@@ -34,34 +34,31 @@ public class BusMovementService {
 		// TODO Auto-generated constructor stub
 	}
 
-	public BusStatusDTO getBusStatus(int busId) {
+	public BusStatusDTO getBusStatus(Bus bus) {
 
-		Bus bus = busFleetService.getBus(busId);
 
-		   if (bus == null) {
-		        throw new BusNotFoundException(busId);
-		    }
 
 		BusStatusDTO status = new BusStatusDTO();
 
 		status.setBusId(bus.getId());
+	    status.setLatitude(bus.getLatitude());
+	    status.setLongitude(bus.getLongitude());
+	    status.setSpeed(bus.getSpeed());
+	    status.setEtaMinutes(
+	            etaService.calculateEtaMinutes(bus)
+	    );
 
-		status.setLatitude(bus.getLatitude());
+	    status.setStatus(bus.getStatus());
 
-		status.setLongitude(bus.getLongitude());
-		status.setSpeed(bus.getSpeed());
+	    status.setNextStop(
+	            etaService.getNextStop(bus)
+	    );
 
-		status.setNextStop(etaService.getNextStop(bus));
+	    status.setDistanceKm(
+	            etaService.calculateDistanceToNextStop(bus)
+	    );
 
-		status.setDistanceKm(etaService.calculateDistanceToNextStop(bus));
-
-		status.setEtaMinutes(etaService.calculateEtaMinutes(bus));
-
-		status.setStatus(
-			    etaService.calculateStatus(bus)
-			);
-
-		return status;
+				return status;
 	}
 
 	public void moveBus(Bus bus, double intervalSeconds) {
@@ -143,74 +140,17 @@ public class BusMovementService {
 	
 	public ParentBusStatusDTO getParentBusStatus(int busId) {
 
-	    Bus bus =
+	    Buses bus =
 	            busFleetService.getBus(busId);
 	    if (bus == null) {
 	        throw new BusNotFoundException(busId);
 	    }
 
 	
-	    String nextStop =
-	            etaService.getNextStop(bus);
-
-	    double eta =
-	            etaService.calculateEtaMinutes(bus);
-
-	    return new ParentBusStatusDTO(
-	            bus.getId(),
-	            bus.getStatus(),
-	            busId, nextStop,
-	            nextStop, eta
-	    );
+	   
+	    return new ParentBusStatusDTO();
+	 	    
 	}
 	
-	public List<BusStatusDTO> getAllBusStatus() {
-
-	    List<BusStatusDTO> result =
-	            new ArrayList<>();
-
-	    for (Bus bus :
-	            busFleetService.getBusFleet()) {
-
-	        BusStatusDTO status =
-	                new BusStatusDTO();
-
-	        status.setBusId(bus.getId());
-
-	        status.setLatitude(
-	                bus.getLatitude()
-	        );
-
-	        status.setLongitude(
-	                bus.getLongitude()
-	        );
-
-	        status.setSpeed(
-	                bus.getSpeed()
-	        );
-
-	        status.setNextStop(
-	                etaService.getNextStop(bus)
-	        );
-
-	        status.setDistanceKm(
-	                etaService
-	                    .calculateDistanceToNextStop(bus)
-	        );
-
-	        status.setEtaMinutes(
-	                etaService
-	                    .calculateEtaMinutes(bus)
-	        );
-
-	        status.setStatus(
-	        	    etaService.calculateStatus(bus)
-	        	);
-
-	        result.add(status);
-	    }
-
-	    return result;
-	}
-
+	
 }

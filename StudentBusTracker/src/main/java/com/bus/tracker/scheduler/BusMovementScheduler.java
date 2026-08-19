@@ -4,21 +4,22 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.bus.tracker.entity.Bus;
+import com.bus.tracker.model.Buses;
 import com.bus.tracker.service.BusFleetService;
 import com.bus.tracker.service.BusMovementService;
+import com.bus.tracker.service.BusSimulationService;
 
 @Component
 public class BusMovementScheduler {
 
-    private BusFleetService busFleetService;
+    private BusSimulationService busSimulationService;
     private BusMovementService movementService;
 
     public BusMovementScheduler(
-            BusFleetService busFleetService,
+    		BusSimulationService busSimulationService,
             BusMovementService movementService) {
 
-        this.busFleetService =
-                busFleetService;
+        this.busSimulationService = busSimulationService;
 
         this.movementService =
                 movementService;
@@ -27,18 +28,9 @@ public class BusMovementScheduler {
 
     @Scheduled(fixedRate = 5000)
     public void moveBuses() {
-
-        for (Bus bus :
-                busFleetService.getBusFleet()) {
-
-            movementService.moveBus(
-                    bus,
-                    5
-            );
-        }
-
-        System.out.println(
-                "Bus positions updated."
-        );
+    	 for (Bus bus : busSimulationService.getBuses()) {
+    		 movementService.moveBus(bus, 5.0);
+    	    }
+       
     }
 }

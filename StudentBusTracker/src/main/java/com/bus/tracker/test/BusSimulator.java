@@ -12,7 +12,7 @@ import com.bus.tracker.service.ETAService;
 
 public class BusSimulator {
 
-	public static void main(String[] args) {
+	public static void createBusSimulator() {
 		BusMovementService busMovement = new BusMovementService();
 		ETAService etaService = new ETAService();
 

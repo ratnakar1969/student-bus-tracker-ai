@@ -54,5 +54,7 @@ public class Stop {
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
+	
+	public Stop() {};
 
 }

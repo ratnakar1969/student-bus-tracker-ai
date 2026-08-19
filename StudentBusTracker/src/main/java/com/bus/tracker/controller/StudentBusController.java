@@ -12,14 +12,19 @@ import com.bus.tracker.dto.ChildArrivalDTO;
 import com.bus.tracker.dto.ParentBusAlertDTO;
 import com.bus.tracker.dto.ParentBusStatusDTO;
 import com.bus.tracker.entity.Bus;
+import com.bus.tracker.model.Buses;
 import com.bus.tracker.service.BusAlertService;
 import com.bus.tracker.service.BusFleetService;
 import com.bus.tracker.service.BusMovementService;
+import com.bus.tracker.service.BusSimulationService;
 
 @RestController
 public class StudentBusController {
 	@Autowired
 	BusFleetService busFleetService;
+	
+	@Autowired
+	BusSimulationService busSimulationService;
 
 	@Autowired
 	BusMovementService busMovementService;
@@ -41,7 +46,7 @@ public class StudentBusController {
 	}
 
 	@GetMapping("/studentbustracker/buses")
-	public List<Bus> getAllBuses() {
+	public List<Buses> getAllBuses() {
 
 		return busFleetService.getBusFleet();
 	}
@@ -49,18 +54,20 @@ public class StudentBusController {
 	@GetMapping("/studentbustracker/buses/status")
 	public List<BusStatusDTO> getAllBusStatus() {
 
-		return busMovementService.getAllBusStatus();
+		return busSimulationService.getAllBusStatus();
 	}
 
 	@GetMapping("/studentbustracker/buses/{busId}")
 	public BusStatusDTO getBuses(@PathVariable int busId) {
-		return busMovementService.getBusStatus(busId);
+		Bus bus= busSimulationService.getBusByNumber(busId);
+		return busMovementService.getBusStatus(bus);
+	}
+	
+	@GetMapping("/studentbustracker/parent/status")
+	public List<ParentBusStatusDTO> testParentStatus() {
+	    return busAlertService.getMyChildrenBusStatus();
 	}
 
-	@GetMapping("/studentbustracker/buses/{busId}/status")
-	public ParentBusStatusDTO getParentBusStatus(@PathVariable int busId) {
 
-		return busMovementService.getParentBusStatus(busId);
-	}
 
 }

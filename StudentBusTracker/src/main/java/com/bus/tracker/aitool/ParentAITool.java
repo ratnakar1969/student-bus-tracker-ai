@@ -1,14 +1,20 @@
 package com.bus.tracker.aitool;
 
+import java.util.List;
+
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.bus.tracker.context.ParentContext;
 import com.bus.tracker.dto.BusStatusDTO;
-import com.bus.tracker.entity.Parent;
-import com.bus.tracker.entity.Student;
+import com.bus.tracker.entity.Bus;
+import com.bus.tracker.model.Buses;
+import com.bus.tracker.model.Parents;
+import com.bus.tracker.model.Students;
+import com.bus.tracker.service.BusAssignmentService;
 import com.bus.tracker.service.BusMovementService;
+import com.bus.tracker.service.BusSimulationService;
 import com.bus.tracker.service.ParentService;
 import com.bus.tracker.service.StudentService;
 
@@ -24,6 +30,13 @@ public class ParentAITool {
     private BusMovementService busMovementService;
     
     @Autowired
+    private BusAssignmentService busAssignmentService;
+    
+    @Autowired
+    private BusSimulationService busSimulationService;
+    
+        
+    @Autowired
     private ParentContext parentContextService;
 
     @Tool(description = """
@@ -36,33 +49,42 @@ public class ParentAITool {
     public String getParentStudents() {
 
     	int parentId = parentContextService.getCurrentParentId();
-        Parent parent = parentService.getParent(parentId);
+        Parents parent = parentService.getParent(parentId);
+        
+        
 
         if (parent == null) {
             return "Parent with ID " + parentId + " was not found.";
         }
+        
+      
 
         StringBuilder result = new StringBuilder();
 
         result.append("Parent: ")
               .append(parent.getName())
               .append("\n");
+        
+        List<Students> studentList =studentService.getStudentByParentId((long) parentId);
+      
 
-        for (Integer studentId : parent.getStudentIds()) {
+        for (Students student: studentList) {
 
-            Student student = studentService.getStudent(studentId);
 
             if (student != null) {
+            	
+            	Buses buses=busAssignmentService.getBusAssignmentByStudentId(student.getId());
+            	Bus bus=busSimulationService.getBusByNumber(buses.getId().intValue());
 
             	  BusStatusDTO busStatus =
-                          busMovementService.getBusStatus(student.getBusId());
+                          busMovementService.getBusStatus(bus);
 
                   result.append("Student ID: ")
                         .append(student.getId())
                         .append(", Student Name: ")
                         .append(student.getName())
                         .append(", Bus Number: ")
-                        .append(student.getBusId())
+                        .append(bus.getId())
                         .append(", Status: ")
                         .append(busStatus.getStatus())
                         .append(", Next Stop: ")

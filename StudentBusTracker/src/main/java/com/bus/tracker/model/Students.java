@@ -51,5 +51,17 @@ public class Students {
 		public void setName(String name) {
 			this.name = name;
 		}
+
+
+
+		public Parents getParent() {
+			return parent;
+		}
+
+
+
+		public void setParent(Parents parent) {
+			this.parent = parent;
+		}
 	    
 }

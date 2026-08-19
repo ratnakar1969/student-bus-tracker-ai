@@ -22,6 +22,9 @@ public class Buses {
 
     @Column(nullable = false)
     private String status;
+    
+    @Column(nullable = false, unique = true)
+    private int busNumber;
 
     public Buses() {
     }
@@ -64,6 +67,14 @@ public class Buses {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public int getBusNumber() {
+		return busNumber;
+	}
+
+	public void setBusNumber(int busNumber) {
+		this.busNumber = busNumber;
 	}
 
 }

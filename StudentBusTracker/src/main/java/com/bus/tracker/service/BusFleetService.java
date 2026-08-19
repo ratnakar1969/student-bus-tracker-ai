@@ -5,30 +5,28 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bus.tracker.builder.BuildBusFleet;
-import com.bus.tracker.entity.Bus;
+import com.bus.tracker.model.Buses;
+import com.bus.tracker.repository.BusRepository;
 
 @Service
 public class BusFleetService {
 
-	@Autowired
-	BuildBusFleet buildBusFleet;
+    @Autowired
+    private BusRepository busRepository;
 
-	public List<Bus> getBusFleet() {
-		return buildBusFleet.createBuses();
-	}
+    public List<Buses> getBusFleet() {
+        return busRepository.findAll();
+    }
 
-	public Bus getBus(int id) {
-		List<Bus> buses = getBusFleet();
+    public Buses getBus(int id) {
+        return busRepository.findById((long) id).orElse(null);
+    }
+    
+    public Buses getBusByNumber(int busNumber) {
 
-		for (Bus bus : buses) {
-
-			if (bus.getId() == id) {
-				return bus;
-			}
-		}
-
-		return null;
-	}
+        return busRepository
+                .findByBusNumber(busNumber)
+                .orElse(null);
+    }
 
 }

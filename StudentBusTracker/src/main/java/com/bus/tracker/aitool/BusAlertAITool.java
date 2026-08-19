@@ -17,33 +17,60 @@ public class BusAlertAITool {
 	private BusAlertService busAlertService;
 
 	@Tool(description = """
-			Check whether any buses belonging to the current parent's
-			children are delayed. Use this when a parent asks whether
-			any of their children are running late or whether any of
-			their children's buses are delayed.
-			""")
+	        Check whether any buses belonging to the children of the
+	        currently logged-in parent are delayed.
+
+	        Use this when the parent asks:
+	        - Is my child's bus delayed?
+	        - Is my child’s bus running late?
+	        - Are any of my children’s buses delayed?
+	        - Are my children running late?
+
+	        Do NOT ask the parent for their name or their child's name.
+	        The current parent is already available through the parent
+	        context.
+	        """)
 	public List<ParentBusAlertDTO> getMyDelayedBuses() {
 
 		return busAlertService.getMyDelayedBuses();
 	}
 	
-	  @Tool(description = """
-	            Get the current bus status of all children belonging
-	            to the current parent. Use this when a parent asks
-	            about the locations, status, next stop or ETA of
-	            their children.
-	            """)
+	@Tool(description = """
+	        Get the current live bus status for the children of the
+	        currently logged-in parent.
+
+	        Use this tool when the parent asks:
+	        - What is the status of my child's bus?
+	        - Where is my child's bus?
+	        - Where is my child’s bus?
+	        - What is the location of my child's bus?
+	        - What is the ETA of my child's bus?
+	        - What is the next stop of my child's bus?
+	        - What are my children's bus statuses?
+
+	       Do NOT ask the parent for their name or their child's name.
+        The current parent is already available through the parent
+        context and this tool automatically determines which
+        children and buses belong to that parent.
+        """)
 	    public List<ParentBusStatusDTO> getMyChildrenBusStatus() {
 
 	        return busAlertService.getMyChildrenBusStatus();
 	    }
 	  
-	  @Tool(description = """
-		        Find which of the current parent's children is expected
-		        to reach school first. Use this when a parent asks which
-		        child will arrive first or which child's bus will reach
-		        school first.
-		        """)
+	@Tool(description = """
+	        Determine which child of the currently logged-in parent
+	        is expected to reach school first.
+
+	        Use this when the parent asks:
+	        - Which child will reach school first?
+	        - Which of my children will arrive first?
+	        - Whose bus will reach school first?
+
+	        Do NOT ask the parent for their name or their child's name.
+	        The current parent is already available through the parent
+	        context.
+	        """)
 		public ChildArrivalDTO getChildReachingFirst() {
 
 		    return busAlertService.getChildReachingFirst();

@@ -12,13 +12,13 @@ import com.bus.tracker.dto.ChildArrivalDTO;
 import com.bus.tracker.dto.ParentBusAlertDTO;
 import com.bus.tracker.dto.ParentBusStatusDTO;
 import com.bus.tracker.entity.Bus;
-import com.bus.tracker.entity.Parent;
-import com.bus.tracker.entity.Student;
+import com.bus.tracker.model.Buses;
+import com.bus.tracker.model.Parents;
+import com.bus.tracker.model.Students;
 
 @Service
 public class BusAlertService {
-	@Autowired
-	private BusFleetService busFleetService;
+
 
 	@Autowired
 	private BusMovementService busMovementService;
@@ -31,6 +31,12 @@ public class BusAlertService {
 	
 	 @Autowired
 	 private ParentContext parentContextService;
+	 
+	 @Autowired
+	 private BusAssignmentService busAssignmentService;
+	 
+	 @Autowired
+	 private BusSimulationService busSimulationService;
 	 
 	 public ChildArrivalDTO getChildReachingFirst() {
 
@@ -69,52 +75,51 @@ public class BusAlertService {
 
 		    int parentId =
 		            parentContextService.getCurrentParentId();
+		    
+		    Parents parent =parentService.getParent(parentId);
 
-		    Parent parent =
-		            parentService.getParent(parentId);
-
-		    if (parent == null) {
+		     if (parent == null) {
 		        return delayedBuses;
 		    }
+		     
+		    
+		     List<Students> students = studentService.getStudents();
+		     
+		     for(Students student: students)
+		     {
+		    	 if(student.getParent().getId() == parentId)
+		    	 {
+		    		 Buses bus=busAssignmentService.getBusAssignmentByStudentId(student.getId());
+		            if (bus == null) {
+				            continue;
+				        }
+		            Bus simulationBus =
+		                    busSimulationService.getBusByNumber(bus.getBusNumber());
 
-		    for (Integer studentId :
-		            parent.getStudentIds()) {
+		            if (simulationBus == null) {
+		                continue;
+		            }
 
-		        Student student =
-		                studentService.getStudent(studentId);
+		            BusStatusDTO status =
+		                    busMovementService.getBusStatus(simulationBus);
+				        if ("DELAYED".equalsIgnoreCase(
+				                status.getStatus())) {
 
-		        if (student == null) {
-		            continue;
-		        }
-
-		        int busId = student.getBusId();
-
-		        Bus bus =
-		                busFleetService.getBus(busId);
-
-		        if (bus == null) {
-		            continue;
-		        }
-		        BusStatusDTO status =
-		                busMovementService.getBusStatus(busId);
-		      
-
-		        if ("DELAYED".equalsIgnoreCase(
-		                status.getStatus())) {
-
-		            ParentBusAlertDTO alert =
-		                    new ParentBusAlertDTO(
-		                            student.getId(),
-		                            student.getName(),
-		                            busId,
-		                            status.getStatus(),
-		                            status.getNextStop(),
-		                            status.getEtaMinutes()
-		                    );
-
-		            delayedBuses.add(alert);
-		        }
-		    }
+				            ParentBusAlertDTO alert =new ParentBusAlertDTO();
+				            alert.setStudentId(student.getId().intValue());
+				            alert.setEtaMinutes(status.getEtaMinutes());
+				            alert.setNextStop(status.getNextStop());
+				            alert.setStatus(status.getStatus());
+				            alert.setStudentId(student.getId().intValue());
+				            alert.setStudentName(student.getName());	            
+				                    
+    			            delayedBuses.add(alert);
+				        }
+		    	 }
+		    	 
+		    	 
+		     }
+		    
 
 		    return delayedBuses;
 		}
@@ -126,52 +131,68 @@ public class BusAlertService {
 
 		    int parentId =
 		            parentContextService.getCurrentParentId();
+		    System.out.println("Current Parent Id = " + parentId);
 
-		    Parent parent =
+		    Parents parent =
 		            parentService.getParent(parentId);
+		    System.out.println("Parent found " + parent);
 
 		    if (parent == null) {
 		        return result;
 		    }
+		    
+     List<Students> students = studentService.getStudents();
+		     
+		     for(Students student: students)
+		     {
+		    	 System.out.println("Student = " + student.getName());
+		    	 System.out.println("Student Parent Id = "
+		    	         + student.getParent().getId());
+		    	 if(student.getParent().getId() == parentId)
+		    	 {
+		    		  System.out.println(
+		                      " Student belongs to current parent"
+		              );
+		    		 Buses bus=busAssignmentService.getBusAssignmentByStudentId(student.getId());
+		    		  System.out.println(
+		                      " Assigned DB Bus = " +
+		                      (bus == null
+		                              ? "NULL"
+		                              : bus.getId())
+		              );
+		            if (bus == null) {
+				            continue;
+				        }
+		            Bus simulationBus =
+		                    busSimulationService.getBusByNumber(
+		                            bus.getBusNumber()
+		                    );
+		            System.out.println("Simulation Bus = "
+		                    + (simulationBus == null ? "NULL" : simulationBus.getId()));
 
-		    for (Integer studentId :
-		            parent.getStudentIds()) {
+		            if (simulationBus == null) {
+		                continue;
+		            }
 
-		        Student student =
-		                studentService.getStudent(studentId);
+		            BusStatusDTO status =
+		                    busMovementService.getBusStatus(simulationBus);
+				        ParentBusStatusDTO childStatus = new ParentBusStatusDTO();
+				        childStatus.setStudentId(student.getId().intValue());
+				        childStatus.setStudentName(student.getName());
+				        childStatus.setEtaMinutes(status.getEtaMinutes());
+				        childStatus.setNextStop(status.getNextStop());
+				        childStatus.setStatus(status.getStatus());
+				        childStatus.setBusId(status.getBusId());
+				        result.add(childStatus);
+		    	 }
+		    	 
+		    	 
+		     }		    
 
-		        if (student == null) {
-		            continue;
-		        }
-
-		        int busId = student.getBusId();
-
-		        Bus bus =
-		                busFleetService.getBus(busId);
-
-		        if (bus == null) {
-		            continue;
-		        }
-
-		        BusStatusDTO status =
-		                busMovementService.getBusStatus(busId);
-
-		        ParentBusStatusDTO childStatus =
-		                new ParentBusStatusDTO(
-		                        student.getId(),
-		                        student.getName(),
-		                        busId,
-		                        status.getStatus(),
-		                        status.getNextStop(),
-		                        status.getEtaMinutes()
-		                );
-		        
-	
-
-		        result.add(childStatus);
-		    }
-
-		    return result;
+		     System.out.println(
+		             " Final result size = " +
+		             result.size());
+       return result;
 		}
 
 }

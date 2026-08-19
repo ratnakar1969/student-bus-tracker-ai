@@ -4,15 +4,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.bus.tracker.entity.Bus;
 import com.bus.tracker.entity.Route;
 import com.bus.tracker.model.Stop;
+import com.bus.tracker.repository.StopRepository;
 
 @Component
 public class BuildBusFleet {
+	
+	@Autowired
+	StopRepository stopRepository;
+	
     private List<Bus> busFleet = new ArrayList<>();
+    
+    
 
 
 public List<Bus> createBuses() {
@@ -20,6 +28,8 @@ public List<Bus> createBuses() {
     if (!busFleet.isEmpty()) {
         return busFleet;
     }
+    
+    
 
 	        // -------------------------
 	        // Bus 37
@@ -36,6 +46,8 @@ public List<Bus> createBuses() {
 
 	        Stop school =
 	                new Stop("School", 17.4700, 78.3500);
+	        
+	        List<Stop> allStops = getAllStops();
 
 	        Route route37 =
 	                new Route(
@@ -148,4 +160,8 @@ public List<Bus> createBuses() {
 	        return busFleet;
 	    }
 
+private List<Stop> getAllStops()
+{
+	return stopRepository.findAll();
+}
 }
