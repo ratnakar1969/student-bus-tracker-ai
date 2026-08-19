@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.bus.tracker.model.Bus;
-import com.bus.tracker.model.Route;
+import com.bus.tracker.entity.Bus;
+import com.bus.tracker.entity.Route;
 import com.bus.tracker.model.Stop;
 
 @Component

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bus.tracker.builder.BuildBusFleet;
-import com.bus.tracker.model.Bus;
+import com.bus.tracker.entity.Bus;
 
 @Service
 public class BusFleetService {

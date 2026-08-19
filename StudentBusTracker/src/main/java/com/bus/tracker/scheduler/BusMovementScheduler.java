@@ -3,7 +3,7 @@ package com.bus.tracker.scheduler;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.bus.tracker.model.Bus;
+import com.bus.tracker.entity.Bus;
 import com.bus.tracker.service.BusFleetService;
 import com.bus.tracker.service.BusMovementService;
 

@@ -11,9 +11,9 @@ import com.bus.tracker.dto.BusStatusDTO;
 import com.bus.tracker.dto.ChildArrivalDTO;
 import com.bus.tracker.dto.ParentBusAlertDTO;
 import com.bus.tracker.dto.ParentBusStatusDTO;
-import com.bus.tracker.model.Bus;
-import com.bus.tracker.model.Parent;
-import com.bus.tracker.model.Student;
+import com.bus.tracker.entity.Bus;
+import com.bus.tracker.entity.Parent;
+import com.bus.tracker.entity.Student;
 
 @Service
 public class BusAlertService {

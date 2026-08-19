@@ -4,7 +4,7 @@ import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.bus.tracker.model.Student;
+import com.bus.tracker.entity.Student;
 import com.bus.tracker.service.StudentService;
 
 

@@ -2,8 +2,8 @@ package com.bus.tracker.service;
 
 import org.springframework.stereotype.Service;
 
-import com.bus.tracker.model.Bus;
-import com.bus.tracker.model.Route;
+import com.bus.tracker.entity.Bus;
+import com.bus.tracker.entity.Route;
 import com.bus.tracker.model.Stop;
 
 @Service

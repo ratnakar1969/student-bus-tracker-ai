@@ -6,7 +6,6 @@ import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.bus.tracker.dto.BusStatusDTO;
 import com.bus.tracker.dto.ChildArrivalDTO;
 import com.bus.tracker.dto.ParentBusAlertDTO;
 import com.bus.tracker.dto.ParentBusStatusDTO;

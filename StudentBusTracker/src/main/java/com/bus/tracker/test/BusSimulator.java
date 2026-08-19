@@ -4,8 +4,8 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
-import com.bus.tracker.model.Bus;
-import com.bus.tracker.model.Route;
+import com.bus.tracker.entity.Bus;
+import com.bus.tracker.entity.Route;
 import com.bus.tracker.model.Stop;
 import com.bus.tracker.service.BusMovementService;
 import com.bus.tracker.service.ETAService;

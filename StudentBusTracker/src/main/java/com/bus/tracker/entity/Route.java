@@ -1,6 +1,11 @@
-package com.bus.tracker.model;
+package com.bus.tracker.entity;
 
 import java.util.List;
+
+import com.bus.tracker.model.Stop;
+
+
+
 
 public class Route {
 	private int routeId;

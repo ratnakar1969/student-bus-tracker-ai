@@ -11,7 +11,7 @@ import com.bus.tracker.dto.BusStatusDTO;
 import com.bus.tracker.dto.ChildArrivalDTO;
 import com.bus.tracker.dto.ParentBusAlertDTO;
 import com.bus.tracker.dto.ParentBusStatusDTO;
-import com.bus.tracker.model.Bus;
+import com.bus.tracker.entity.Bus;
 import com.bus.tracker.service.BusAlertService;
 import com.bus.tracker.service.BusFleetService;
 import com.bus.tracker.service.BusMovementService;

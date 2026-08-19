@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.bus.tracker.model.Parent;
+import com.bus.tracker.entity.Parent;
 
 @Service
 public class ParentService {

@@ -1,4 +1,4 @@
-package com.bus.tracker.model;
+package com.bus.tracker.entity;
 
 public class Student {
 	   private int id;

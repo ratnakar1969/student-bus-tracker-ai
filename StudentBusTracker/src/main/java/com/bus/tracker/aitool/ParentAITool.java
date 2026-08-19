@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 
 import com.bus.tracker.context.ParentContext;
 import com.bus.tracker.dto.BusStatusDTO;
-import com.bus.tracker.model.Parent;
-import com.bus.tracker.model.Student;
+import com.bus.tracker.entity.Parent;
+import com.bus.tracker.entity.Student;
 import com.bus.tracker.service.BusMovementService;
 import com.bus.tracker.service.ParentService;
 import com.bus.tracker.service.StudentService;

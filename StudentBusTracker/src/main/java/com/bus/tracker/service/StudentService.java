@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.bus.tracker.model.Student;
+import com.bus.tracker.entity.Student;
 
 @Service
 public class StudentService {
